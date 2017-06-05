@@ -24,6 +24,24 @@ const (
 	ErrSystem       = "操作系统错误"
 )
 
+// CodeInfo definiton.
+type ResponseInfo struct {
+	Code int    `json:"code"`
+	Info string `json:"info"`
+	Data string `json:"data"`
+}
+
+// NewErrorInfo return a CodeInfo represents error.
+func NewErrorInfo(info string) *ResponseInfo {
+	return &ResponseInfo{-1, info, ""}
+}
+
+// NewNormalInfo return a CodeInfo represents OK.
+func NewNormalInfo(info string, data string) *ResponseInfo {
+	return &ResponseInfo{0, info, data}
+}
+
+
 // ControllerError is controller error info structer.
 type ControllerError struct {
 	Status   int    `json:"status"`

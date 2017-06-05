@@ -2,16 +2,15 @@ package models
 
 import (
 	"errors"
-	"api-server/data"
 	"github.com/astaxie/beego"
 	//"encoding/binary"
 	"strconv"
 )
 
 type SystemSettings struct {
-	Name   string
-	IntVal int
-	StrVal string
+	Name   string	`xorm:"not null default '' unique VARCHAR(32)"`
+	IntVal int	`xorm:"not null default '' unique VARCHAR(191)"`
+	StrVal string	`xorm:"not null default '' unique VARCHAR(512)"`
 }
 
 func init(){
@@ -19,9 +18,9 @@ func init(){
 }
 
 
-func LoadSystemSettings() (table []SystemSettings, err error) {
+func LoadAll() (table []SystemSettings, err error) {
 
-	results, err := data.DB().Query("select StatusName,StatusValue,StatusString from SystemStatusInfo")
+	results, err := dbEngine.Query("select StatusName,StatusValue,StatusString from SystemStatusInfo")
 	if err != nil {
 		beego.Warn("exec sql failed:", err)
 		return nil, err

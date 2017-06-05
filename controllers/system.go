@@ -29,7 +29,7 @@ func init(){
 // @Failure 500 :server error
 // @router / [get]
 func (u *SystemController) GetClientSettings() {
-	data, err := models.LoadSystemSettings()
+	data, err := models.LoadAll()
 	if err != nil{
 		u.RetError(errDatabase)
 	}

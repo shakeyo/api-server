@@ -1,4 +1,4 @@
-package data
+package models
 
 import (
 //"database/sql"
@@ -9,10 +9,10 @@ _ "github.com/denisenkom/go-mssqldb"
 	"github.com/go-xorm/core"
 )
 
-var engine *xorm.Engine
+var dbEngine *xorm.Engine
 
 func DB() *xorm.Engine {
-	return engine
+	return dbEngine
 }
 
 func init() {
@@ -21,13 +21,13 @@ func init() {
 	url := beego.AppConfig.String("sql::url")
 
 	var err error
-	engine, err = xorm.NewEngine("mssql", url)
+	dbEngine, err = xorm.NewEngine("mssql", url)
 	if err != nil{
 		panic(err)
 	}
 
 	//engine.SetLogger(beego.BeeLogger)
-	engine.ShowSQL(true)
+	dbEngine.ShowSQL(true)
 
 	var defaultLvl core.LogLevel
 	if dev{
@@ -37,7 +37,7 @@ func init() {
 	}
 
 	level := core.LogLevel(beego.AppConfig.DefaultInt("sql:loglevel", int(defaultLvl)))
-	engine.Logger().SetLevel(core.LogLevel(level))
+	dbEngine.Logger().SetLevel(core.LogLevel(level))
 }
 
 
